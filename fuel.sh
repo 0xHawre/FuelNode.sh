@@ -106,26 +106,35 @@ read -p "Press Enter to continue..." enter_key
 echo "Continuing with the rest of the story..."
 
 apt-get install tmux
-tmux new-session -s fuelu 
+start_fuel_core() {
+    echo "Starting tmux session..."
+    tmux new-session -d -s fuelu
 
-read -p "Enter the node name: " nodeName
-read -p "Enter youre secretkeu" secretK  
-read -p "Enter youre ETH_SEPOLIA RPC " RPC
-fuel-core run \
-  --service-name=$nodeName \
-  --keypair $secretK \
-  --relayer $RPC  \
-  --ip=0.0.0.0 --port=5333 --peering-port=40453 \
-  --db-path=~/.fuel-sepolia-testnet \
-  --snapshot /root/.forc/git/checkouts/std-9be0d6062747ea7/2f0392ee35a1e4dd80bd8034962d5b4083dfb8b6/.github/workflows/local-testnode \
-  --utxo-validation --poa-instant false --enable-p2p \
-  --reserved-nodes /dns4/p2p-testnet.fuel.network/tcp/30333/p2p/16Uiu2HAmDxoChB7AheKNvCVpD4PHJwuDGn8rifMBEHmEynGHvHrf \
-  --sync-header-batch-size 100 \
-  --enable-relayer \
-  --relayer-v2-listening-contracts=0x01855B78C1f8868DE70e84507ec735983bf262dA \
-  --relayer-da-deploy-height=5827607 \
-  --relayer-log-page-size=500 \
-  --sync-block-stream-buffer-size 30
+    read -p "Enter the node name: " nodeName
+    read -p "Enter your secret key: " secretK
+    read -p "Enter your ETH_SEPOLIA RPC: " RPC
 
+echo "Running fuel-core in tmux session 'fuelu'..."
+    tmux send-keys -t fuelu 
+     "fuel-core run \
+        --service-name=$nodeName  \
+        --keypair $secretK \
+        --relayer $RPC  \
+        --ip=0.0.0.0 --port=5333 --peering-port=40453 \
+        --db-path=~/.fuel-sepolia-testnet \
+        --snapshot /root/.forc/git/checkouts/std-9be0d6062747ea7/2f0392ee35a1e4dd80bd8034962d5b4083dfb8b6/.github/workflows/local-testnode \
+        --utxo-validation --poa-instant false --enable-p2p \
+        --reserved-nodes /dns4/p2p-testnet.fuel.network/tcp/30333/p2p/16Uiu2HAmDxoChB7AheKNvCVpD4PHJwuDGn8rifMBEHmEynGHvHrf \
+        --sync-header-batch-size 100 \
+        --enable-relayer \
+        --relayer-v2-listening-contracts=0x01855B78C1f8868DE70e84507ec735983bf262dA \
+        --relayer-da-deploy-height=5827607 \
+        --relayer-log-page-size=500 \
+        --sync-block-stream-buffer-size 30
+    " Enter
+    echo "Fuel Core started in tmux session 'fuelu'."
+}
+
+start_fuel_core
 
 
