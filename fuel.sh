@@ -77,10 +77,10 @@ check_rustc() {
 }
 install_rustc() {
   echo "installing rusrc...."
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs/ | sh -s -- -y 
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs/ | sh -s -- -y
+  PATH=#PATH:./cargo/bin
 }
 check_rustc
-source $HOME/.cargo/env # add rust to your PATH 
 
 # install tmux 
 check_tmux() {
@@ -104,13 +104,16 @@ source /root/.bashrc
 export PATH="/root/.fuelup/bin:$PATH"
 
 fuelup toolchain install latest
-Update Fuelup to the latest version
+fuelup self update 
 fuelup toolchain install nightly
 fuelup default nightly
 fuelup show
 fuelup default
 
-git clone https://github.com/0xHawre/fuelNode && cd fuelNode 
+git clone https://github.com/FuelLabs/chain-configuration chain-configuration
+mkdir .fuel-sepolia-testnet 
+cp -r chain-configuration/ignition/* ~/.fuel-sepolia-testnet/
+
 fuelup toolchain install testnet
 fuelup default testnet
 
@@ -139,7 +142,7 @@ start_fuel_core() {
       --relayer=$RPC \
       --ip=0.0.0.0 --port=5333 --peering-port=40453 \
       --db-path=~/.fuel-sepolia-testnet \
-      --snapshot=/root/.forc/git/checkouts/std-9be0d6062747ea7/2f0392ee35a1e4dd80bd8034962d5b4083dfb8b6/.github/workflows/local-testnode \
+      --snapshot ~/.fuel-sepolia-testnet \
       --utxo-validation --poa-instant=false --enable-p2p \
       --reserved-nodes=/dns4/p2p-testnet.fuel.network/tcp/30333/p2p/16Uiu2HAmDxoChB7AheKNvCVpD4PHJwuDGn8rifMBEHmEynGHvHrf \
       --sync-header-batch-size=100 \
