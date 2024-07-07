@@ -126,7 +126,7 @@ read -p "If you saved you're secret key Press Enter to continue..." enter_key
 
 
 read -p "Enter node name: " nodeName
-read -sp "Enter secret key pair: " sec
+read -p "Enter secret key pair: " sec
 echo
 read -p "Enter relayer RPC: " RPC
 
