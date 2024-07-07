@@ -138,16 +138,17 @@ read -p "If you saved your secret key, press Enter to continue..." enter_key
 secret_value=$(jq -r '.secret' secret.txt)
 
 read -p "Enter node name: " nodeName
+read -p "Enter secret key" secret
 
 cat <<EOT > /tmp/fuel_core_command.sh
 #!/bin/bash
 fuel-core run \\
       --service-name=${nodeName} \\
-      --keypair=${secret_value} \\
-      --relayer=\${RPC} \\
+      --keypair $secret \\
+      --relayer https://eth-sepolia.g.alchemy.com/v2/demo \\
       --ip=0.0.0.0 --port=5333 --peering-port=40453 \\
-      --db-path=~/.fuel-sepolia-testnet \\
-      --snapshot=~/.fuel-sepolia-testnet \\
+      --db-path ~/.fuel-sepolia-testnet \\
+      --snapshot ~/.fuel-sepolia-testnet \\
       --utxo-validation --poa-instant=false --enable-p2p \\
       --reserved-nodes=/dns4/p2p-testnet.fuel.network/tcp/30333/p2p/16Uiu2HAmDxoChB7AheKNvCVpD4PHJwuDGn8rifMBEHmEynGHvHrf \\
       --sync-header-batch-size=100 \\
