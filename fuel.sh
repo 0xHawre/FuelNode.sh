@@ -124,19 +124,15 @@ echo "Your keys have been saved to secret.txt."
 echo "Please save them securely and press Enter after you have done so."
 read -p "If you saved you're secret key Press Enter to continue..." enter_key
 
-start_fuel_core() {
-  read -p "Enter the node name: " nodeName
-  read -p "Enter your secret key: " sec 
-  read -p "Enter your ETH_SEPOLIA RPC: " RPC
 
-  echo "Running fuel-core in tmux session 'fuelu'..."
+nodeName="your_node_name"
+sec="your_secret_keypair"
+RPC="your_relayer_rpc"
 
-  # Create a new tmux session named 'fuelu' if it doesn't exist
-  tmux new-session -d -s fuelu
+SESSION_NAME="my_tmux_session"
+tmux new-session -d -s $SESSION_NAME
 
-  # Send the fuel-core command to the 'fuelu' tmux session
-  tmux send-keys -t fuelu "
-    fuel-core run \
+tmux_command="fuel-core run \
       --service-name=$nodeName \
       --keypair=$sec \
       --relayer=$RPC \
@@ -150,12 +146,10 @@ start_fuel_core() {
       --relayer-v2-listening-contracts=0x01855B78C1f8868DE70e84507ec735983bf262dA \
       --relayer-da-deploy-height=5827607 \
       --relayer-log-page-size=500 \
-      --sync-block-stream-buffer-size=30
-  " Enter
+      --sync-block-stream-buffer-size=30"
 
-  echo "Fuel Core started in tmux session 'fuelu'."
-}
+tmux send-keys -t $SESSION_NAME "$tmux_command" C-m
 
-# Call the function to start fuel-core
-start_fuel_core
-exit 0 
+tmux attach-session -t $SESSION_NAME
+
+
