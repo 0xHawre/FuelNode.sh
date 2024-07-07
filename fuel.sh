@@ -110,7 +110,7 @@ fuelup default nightly
 fuelup show
 fuelup default
 
-git clone https://github.com/0xHawre/fuelNode
+git clone https://github.com/0xHawre/fuelNode && cd fuelNode 
 fuelup toolchain install testnet
 fuelup default testnet
 
