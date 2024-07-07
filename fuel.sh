@@ -125,17 +125,18 @@ echo "Please save them securely and press Enter after you have done so."
 read -p "If you saved you're secret key Press Enter to continue..." enter_key
 
 
-nodeName="your_node_name"
-sec="your_secret_keypair"
-RPC="your_relayer_rpc"
+read -p "Enter node name: " nodeName
+read -sp "Enter secret key pair: " sec
+echo
+read -p "Enter relayer RPC: " RPC
 
-SESSION_NAME="my_tmux_session"
-tmux new-session -d -s $SESSION_NAME
 
-tmux_command="fuel-core run \
+cat <<EOT > /tmp/fuel_core_command.sh
+#!/bin/bash
+fuel-core run \
       --service-name=$nodeName \
-      --keypair=$sec \
-      --relayer=$RPC \
+      --keypair= $sec \
+      --relayer= $RPC \
       --ip=0.0.0.0 --port=5333 --peering-port=40453 \
       --db-path=~/.fuel-sepolia-testnet \
       --snapshot ~/.fuel-sepolia-testnet \
@@ -146,10 +147,13 @@ tmux_command="fuel-core run \
       --relayer-v2-listening-contracts=0x01855B78C1f8868DE70e84507ec735983bf262dA \
       --relayer-da-deploy-height=5827607 \
       --relayer-log-page-size=500 \
-      --sync-block-stream-buffer-size=30"
+      --sync-block-stream-buffer-size=30
+EOT
 
-tmux send-keys -t $SESSION_NAME "$tmux_command" C-m
+chmod +x /tmp/fuel_core_command.sh
 
-tmux attach-session -t $SESSION_NAME
-
+SESSION_NAME="my_tmux_session"
+tmux new-session -d -s $SESSION_NAME
+tmux send-keys -t $SESSION_NAME "/tmp/fuel_core_command.sh" C-m
+tmux attach -t $SESSION_NAME
 
