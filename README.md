@@ -40,6 +40,8 @@ chmod +x FuelNode.sh
 ./FuelNode.sh
 ```
 
+by ``` CTRL + b  then a ```exit from tmux 
+
 ### Note:
 
 You need SEPOLIA RPC for this script to function correctly.
@@ -51,7 +53,7 @@ cat secret.txt
 
 Make sure to replace placeholders like "SEPOLIA RPC" with the specific details or instructions relevant to your setup.
 
-by ``` CTRL + b  then a ```exit from tmux 
+
 
 youre tmux should be like: ![Screenshot 2024-07-07 at 3 45 48 PM](https://github.com/0xHawre/FuelNode.sh/assets/131952165/a99af718-3921-4d6e-abc2-beedfd5c0127)
 
