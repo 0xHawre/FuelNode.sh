@@ -4,6 +4,16 @@
 
 This script automates the setup process for running a Fuel Core node on your system.
 
+
+### Hardware Requirements
+
+| Hardware   | Minimum   |
+|------------|-----------|
+| Processor  | 2 Cores   |
+| Memory     | 4 GB      |
+| Storage    | 30 GB     |
+
+
 ## Requirements
 
 ### Install git:
@@ -33,7 +43,10 @@ chmod +x FuelNode.sh
 ### Note:
 
 You need SEPOLIA RPC for this script to function correctly.
-
+also youre privet key is saved in secret.txt you can see thath with:
+```sh 
+cat secret.txt
+```
 ---
 
 Make sure to replace placeholders like "SEPOLIA RPC" with the specific details or instructions relevant to your setup.
