@@ -40,7 +40,7 @@ chmod +x FuelNode.sh
 ./FuelNode.sh
 ```
 
-by ``` CTRL + b  then a ```exit from tmux 
+by ``` CTRL + b  then d ```exit from tmux 
 
 ### Note:
 
